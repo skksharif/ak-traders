@@ -17,8 +17,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-neutral-900 font-bold text-2xl px-4 py-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform">
-              AK
+            <div className="bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-neutral-900 font-bold text-2xl hover:scale-105 transition-transform">
+              <img src="/logo.png" alt="logo" className='w-[70px] rounded' />
             </div>
             <div>
               <h1 className="text-white font-bold text-xl tracking-tight">AK TRADERS</h1>

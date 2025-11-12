@@ -1,72 +1,122 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { X } from "lucide-react"; // Replacing FaTimes with Lucide icon
 
-const categories = ['All', 'Scaffolding', 'Centering', 'Spans', 'Jacks', 'Clamps'];
+type GalleryItem = {
+  category: string;
+  image: string;
+};
 
-const images = [
-  { category: 'Scaffolding', title: 'Scaffolding System', url: 'https://images.pexels.com/photos/585419/pexels-photo-585419.jpeg?auto=compress&cs=tinysrgb&w=800' },
-  { category: 'Centering', title: 'Centering Sheets', url: 'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=800' },
-  { category: 'Scaffolding', title: 'Construction Site', url: 'https://images.pexels.com/photos/1216544/pexels-photo-1216544.jpeg?auto=compress&cs=tinysrgb&w=800' },
-  { category: 'Spans', title: 'Acrow Spans', url: 'https://images.pexels.com/photos/159358/construction-site-build-construction-work-159358.jpeg?auto=compress&cs=tinysrgb&w=800' },
-  { category: 'Jacks', title: 'Jack Pipes', url: 'https://images.pexels.com/photos/106606/construction-site-build-construction-work-106606.jpeg?auto=compress&cs=tinysrgb&w=800' },
-  { category: 'Clamps', title: 'Clamps & Fittings', url: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=800' },
-  { category: 'Scaffolding', title: 'Steel Structure', url: 'https://images.pexels.com/photos/2219010/pexels-photo-2219010.jpeg?auto=compress&cs=tinysrgb&w=800' },
-  { category: 'Centering', title: 'Column Boxes', url: 'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=800' },
-];
+const Gallery = () => {
 
-export default function Gallery() {
-  const [activeCategory, setActiveCategory] = useState('All');
 
-  const filteredImages = activeCategory === 'All'
-    ? images
-    : images.filter(img => img.category === activeCategory);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+
+  // Categories
+  const categories = [
+    { id: "all", name: "All Projects" },
+    { id: "scaffolding", name: "Scaffolding Systems" },
+    { id: "acrospan", name: "Acro Spans" },
+    { id: "centeredsheets", name: "Centered Sheets" },
+    { id: "clamps", name: "Clamps" },
+    { id: "galvanizedplanks", name: "Metal Planks" },
+    { id: "jackpipes", name: "Jack Pipes" },
+    { id: "columnbox", name: "Column Box" },
+  ];
+
+  // Gallery Items
+  const galleryItems: GalleryItem[] = [
+    { category: "scaffolding", image: "/gallery/scaffolding/i1.png" },
+    { category: "scaffolding", image: "/gallery/scaffolding/i2.png" },
+    { category: "acrospan", image: "/gallery/acrospan/i1.png" },
+    { category: "centeredsheets", image: "/gallery/centeredsheets/i1.png" },
+    { category: "clamps", image: "/gallery/clamps/i1.jpg" },
+    { category: "galvanizedplanks", image: "/gallery/galvanizedplanks/i1.png" },
+    { category: "jackpipes", image: "/gallery/jackpipes/i1.png" },
+    { category: "columnbox", image: "/gallery/columnbox/i1.jpg" },
+    { category: "other", image: "/gallery/other/i1.jpg" },
+  ];
+
+  const filteredItems =
+    selectedCategory === "all"
+      ? galleryItems
+      : galleryItems.filter((item) => item.category === selectedCategory);
 
   return (
-    <section id="gallery" className="bg-neutral-800 py-20 lg:py-28">
+    <section id="gallery" className="py-16 bg-[#111] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-            Our <span className="text-yellow-500">Gallery</span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-gold mb-4">
+            Project <span className="text-white">Gallery</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-yellow-500 to-yellow-600 mx-auto mb-8"></div>
-
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                  activeCategory === category
-                    ? 'bg-yellow-500 text-neutral-900'
-                    : 'bg-neutral-700 text-gray-300 hover:bg-neutral-600'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <div className="w-24 h-1 bg-gold mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredImages.map((image, index) => (
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-4 mb-10">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
+                selectedCategory === category.id
+                  ? "bg-gold text-black shadow-md"
+                  : "bg-[#1A1A1A] text-gray-300 border border-gray-700 hover:border-gold hover:text-gold"
+              }`}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Gallery Grid */}
+        <div
+
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        >
+          {filteredItems.map((item, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-xl bg-neutral-900 aspect-square"
+              className={`group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:scale-105`}
+              style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => setSelectedImage(item)}
             >
               <img
-                src={image.url}
-                alt={image.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                src={item.image}
+                alt="Gallery"
+                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <div>
-                  <p className="text-yellow-500 text-sm font-semibold mb-1">{image.category}</p>
-                  <h3 className="text-white font-bold text-lg">{image.title}</h3>
-                </div>
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                <span className="text-gold font-semibold text-lg">
+                  View Image
+                </span>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Lightbox */}
+      {selectedImage && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <div className="relative max-w-5xl w-full">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 w-10 h-10 bg-gold rounded-full flex items-center justify-center hover:bg-white/90 transition-colors duration-300 z-10"
+            >
+              <X className="text-black w-5 h-5" />
+            </button>
+            <img
+              src={selectedImage.image}
+              alt="Gallery Large"
+              className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
-}
+};
+
+export default Gallery;
