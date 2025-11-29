@@ -7,8 +7,6 @@ type GalleryItem = {
 };
 
 const Gallery = () => {
-
-
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
@@ -30,6 +28,8 @@ const Gallery = () => {
     { category: "scaffolding", image: "/gallery/scaffolding/i2.png" },
     { category: "acrospan", image: "/gallery/acrospan/i1.png" },
     { category: "centeredsheets", image: "/gallery/centeredsheets/i1.png" },
+    { category: "columnbox", image: "/gallery/other/i13.jpg" },
+
     { category: "clamps", image: "/gallery/clamps/i1.jpg" },
     { category: "galvanizedplanks", image: "/gallery/galvanizedplanks/i1.png" },
     { category: "jackpipes", image: "/gallery/jackpipes/i1.png" },
@@ -89,10 +89,7 @@ const Gallery = () => {
         </div>
 
         {/* Gallery Grid */}
-        <div
-
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredItems.map((item, index) => (
             <div
               key={index}
